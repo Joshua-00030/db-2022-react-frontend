@@ -1,32 +1,19 @@
 import axios from 'axios'
-const baseUrl = '/api/videos'
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
 
-let token = null
-
-const setToken = newToken => {
-  newToken !== null?
-  token = `bearer ${newToken}`:
-  token = null
+const getCRSF = async () => {
+  const request = await axios.get('')
+  console.log(request)
 }
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
-
-  return request.then(response => response.data)
-}
-
-const create = async (newObject) => {
-  const config = {
-    headers: { Authorization: token },
-  }
-  
-  const response = await axios.post(baseUrl, newObject, config)
+const loadPage = async (text) => 
+{
+  const newObject = new FormData()
+  newObject.append('search_text', text)
+  newObject.append('search_title', 'on')
+  const response = await axios.post('', newObject)
   return response.data
 }
 
-const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
-  return request.then(response => response.data)
-}
-
-export default { getAll, create, update, setToken }
+export default { loadPage, getCRSF }

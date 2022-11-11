@@ -1,172 +1,58 @@
 import { useState, useEffect } from 'react'
-import Video from './components/Video'
+import SearchForm from './components/serchForm'
 import Notification from './components/notification'
-import blogService from './services/videos'
-import loginService from './services/login'
+import VideoForm from './components/VideoForm'
+import videoService from './services/videos'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import  Button from 'react-bootstrap/Button';
+
 
 const App = () => {
   const [videos, setVideos] = useState([])
-  const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('')
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
+  const [searchText, setSearchText] = useState('')
+  const [page, setPage] = useState(0)
 
   useEffect(() => {
-    blogService
-      .getAll()
-      .then(initialVideos => {
-        setVideos(initialVideos)
-      })
-  }, [])
+    window.scrollTo(0, 0)
+  }, [page])
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
-
-  const userForm = () => (
-      <form onSubmit={logoutUser}>{user.name} logged in 
-        <button type="submit">logout</button>
-      </form>
-  )
-
-  const handleBlogCreation = async (event) => {
+  const getData = async (event) => {
     event.preventDefault()
-    try {
-      await blogService.setToken(user.token)
-      
-      const res = await blogService.create(
-        {title:newTitle, author:newAuthor, url:newUrl})
-        setErrorMessage(`New video: "${newTitle}",\nWritten by ${newAuthor} added`)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      setVideos(videos.concat(res))
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
-    } catch (exception) {
-      setErrorMessage('Invalid Field(s)')
+    if(searchText === ''){
+      setErrorMessage('invalid search')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
+      return
     }
+    setPage(0)
+    setVideos(await videoService.loadPage(searchText))
   }
 
-  const creatBlogForm = () => (
-    <div>
-      <p>
-        Search:
-      </p>
-      <form onSubmit={handleBlogCreation}>
-        <div>
-          Title
-          <input
-            type="text"
-            value={newTitle}
-            name="newTitle"
-            onChange={({ target }) => setNewTitle(target.value)}
-            />
-        </div>
-        <div>
-          Channel
-          <input
-            type="text"
-            value={newAuthor}
-            name="newAuthor"
-            onChange={({ target }) => setNewAuthor(target.value)}
-            />
-        </div>
-        <div>
-          Url
-          <input
-            type="text"
-            value={newUrl}
-            name="newUrl"
-            onChange={({ target }) => setNewUrl(target.value)}
-            />
-        </div>
-        <button type="submit">submit</button>
-      </form>
-    </div>
-  )
 
-  const videoForm = () => (
-    videos.map(video =>
-      <Video key={video.id} video={video} />
-    )
-  )
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-      const user = await loginService.login({
-        username, password,
-      })
-      setUser(user)
-      blogService.setToken(user.token)
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      ) 
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+  const pageination = () => {
+    var selectors = []
+    if(page > 0){
+      selectors.push(<Button onClick={() => setPage(page - 1)}>{page - 1}</Button>)
     }
-  }
-  
-  const logoutUser = (event) => {
-    event.preventDefault()
-    window.localStorage.removeItem('loggedBlogappUser')
-    blogService.setToken(null)
-    setUser(null)
+    selectors.push(<Button disabled>{page}</Button>)
+    if(videos.length > (page + 1) * 20){
+      selectors.push(<Button onClick={() => setPage(page + 1)}>{page + 1}</Button>)
+    }
+    return selectors
   }
 
   return (
     <div>
       <h1>DataTube</h1>
       <div>
-        {user === null ?
-          [loginForm(),
-            <Notification message={errorMessage} />]:
-          [userForm(),
-            creatBlogForm(),
-            <Notification message={errorMessage} />,
-            videoForm()]
+        {videos.length === 0 ? [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}></SearchForm>,
+          <Notification message={errorMessage} />]: 
+          [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}></SearchForm>,
+          <Notification message={errorMessage} />,
+          <VideoForm videos={videos} page={page}></VideoForm>,
+          pageination()]
           }
       </div>
     </div>

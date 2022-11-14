@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 
 const Video = ({video}) =>(
-    <Col className="d-flex" id={video.videoid}>
+    <Col className="d-flex" key={video.fields.videoid}>
       <Card className="bg-dark text-white flex-fill">
         <p>
         <a href={`https://www.youtube.com/watch?v=${video.fields.videoid}`}><b>{video.fields.title}</b></a>
@@ -13,7 +13,7 @@ const Video = ({video}) =>(
           </p>
           <p>views: {video.views}</p>
           <p>duration: {video.duration}</p>
-          <p>{video.fields.description}</p>
+          <p>desc</p>
         </div>
         <div>
           <p>Likes:12k</p>

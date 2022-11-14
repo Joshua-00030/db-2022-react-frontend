@@ -12,6 +12,7 @@ const loadPage = async (text) =>
   const newObject = new FormData()
   newObject.append('search_text', text)
   newObject.append('search_title', 'on')
+  newObject.append('react','on')
   const response = await axios.post('', newObject)
   return response.data
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import SearchForm from './components/serchForm'
+import Pagination from './components/Pagination'
 import Notification from './components/notification'
 import VideoForm from './components/VideoForm'
 import videoService from './services/videos'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  Button from 'react-bootstrap/Button';
 
 
 const App = () => {
@@ -27,20 +27,8 @@ const App = () => {
       return
     }
     setPage(0)
-    setVideos(await videoService.loadPage(searchText))
-  }
-
-
-  const pageination = () => {
-    var selectors = []
-    if(page > 0){
-      selectors.push(<Button onClick={() => setPage(page - 1)}>{page - 1}</Button>)
-    }
-    selectors.push(<Button disabled>{page}</Button>)
-    if(videos.length > (page + 1) * 20){
-      selectors.push(<Button onClick={() => setPage(page + 1)}>{page + 1}</Button>)
-    }
-    return selectors
+    const response = await videoService.loadPage(searchText)
+    setVideos(response)
   }
 
   return (
@@ -52,7 +40,7 @@ const App = () => {
           [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}></SearchForm>,
           <Notification message={errorMessage} />,
           <VideoForm videos={videos} page={page}></VideoForm>,
-          pageination()]
+          <Pagination videos={videos} setPage={setPage} page={page}></Pagination>]
           }
       </div>
     </div>

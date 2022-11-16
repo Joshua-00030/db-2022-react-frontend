@@ -33,14 +33,14 @@ const App = () => {
 
   return (
     <div>
-      <h1>DataTube</h1>
+      <h1 className='ms-2 ps-1'>DataTube</h1>
       <div>
-        {videos.length === 0 ? [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}></SearchForm>,
+        {videos.length === 0 ? [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}/>,
           <Notification message={errorMessage} />]: 
-          [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}></SearchForm>,
+          [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}/>,
           <Notification message={errorMessage} />,
-          <VideoForm videos={videos} page={page}></VideoForm>,
-          <Pagination videos={videos} setPage={setPage} page={page}></Pagination>]
+          <VideoForm videos={videos} page={page}/>,
+          <Pagination videos={videos} setPage={setPage} page={page}/>]
           }
       </div>
     </div>

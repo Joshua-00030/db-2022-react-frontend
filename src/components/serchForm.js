@@ -1,5 +1,5 @@
 const SearchForm = ({searchText, setSearchText, getData}) => (
-    <div>
+    <div className="ms-2 ps-1 mb-2">
       <p>
         Search:
       </p>

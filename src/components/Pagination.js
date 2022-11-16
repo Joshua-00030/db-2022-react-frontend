@@ -9,7 +9,11 @@
     if(videos.length > (page + 1) * 16){
       selectors.push(<Button onClick={() => setPage(page + 1)} key='page-forward'>{page + 1}</Button>)
     }
-    return selectors
+    return (
+      <div className='mx-auto' style={{width: 110 + 'px'}}>
+      {selectors}
+      </div>
+    )
   }
 
   export default Pagination

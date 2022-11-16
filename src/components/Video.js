@@ -1,8 +1,8 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 
-const Video = ({video}) =>(
-    <Col className="d-flex" key={video.fields.videoid}>
+const Video = ({video, setSelectedVideo}) =>(
+    <Col className="d-flex mb-1" key={video.fields.videoid} href='localhost' target='al'>
       <Card className="bg-dark text-white flex-fill">
         <p>
         <a href={`https://www.youtube.com/watch?v=${video.fields.videoid}`}><b>{video.fields.title}</b></a>
@@ -14,8 +14,9 @@ const Video = ({video}) =>(
           <p>views: {video.views}</p>
           <p>duration: {video.duration}</p>
           <p>desc</p>
-        </div>
-        <div>
+          <p>
+          <span className='bg-info' onClick={() => setSelectedVideo(video)} style={{cursor: 'pointer'}}>drefhui</span>
+          </p>
           <p>Likes:12k</p>
           <p>10/24/2022</p>
         </div>

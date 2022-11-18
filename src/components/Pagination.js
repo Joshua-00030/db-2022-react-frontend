@@ -2,15 +2,11 @@
 
   const Pagination = ({page, setPage, videos}) => {
     var selectors = []
-    if(page > 0){
-      selectors.push(<Button onClick={() => setPage(page - 1)} key='page-back'>{page - 1}</Button>)
-    }
-    selectors.push(<Button disabled key='page-curr'>{page}</Button>)
-    if(videos.length > (page + 1) * 16){
-      selectors.push(<Button onClick={() => setPage(page + 1)} key='page-forward'>{page + 1}</Button>)
-    }
+      const pages =Array.from({length: Math.ceil(videos.length/16)}, (_, i) => i + 1)
+      pages.slice(Math.max(0,page-5), Math.min(pages.length, page+6)).map(j => selectors.push(<Button disabled={j-1 === page} onClick={() => setPage(j-1)} key={`page-forward${j}`}>{j}</Button>))
+      
     return (
-      <div className='mx-auto' style={{width: 110 + 'px'}}>
+      <div className='mx-auto' style={{width: 37 * selectors.length + 'px'}}>
       {selectors}
       </div>
     )

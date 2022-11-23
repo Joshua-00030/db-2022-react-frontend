@@ -10,7 +10,7 @@ const VideoForm = ({videos, page}) => {
       dvid.push(
             <Row className='mx-0' key={`video-row-${j}`}>
             {videos.slice(16 * page + 4 * j, 16 * page + 4 * (j+1)).map(video =>
-            <Video key={video.fields.videoid} video={video} setSelectedVideo={setSelectedVideo}/>
+            <Video key={video.fields.videoid} video={video} setSelectedVideo={setSelectedVideo} selectedVideo={selectedVideo}/>
             )}
             </Row>
         )

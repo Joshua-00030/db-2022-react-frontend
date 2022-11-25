@@ -2,7 +2,7 @@ import Row from 'react-bootstrap/Row';
 import Video from './Video'
 import { useState } from 'react';
 
-const VideoForm = ({videos, page}) => {
+const VideoForm = ({videos, page, setChannel}) => {
   const [selectedVideo, setSelectedVideo] = useState(null)
   if(!selectedVideo){
     var dvid = []
@@ -10,7 +10,7 @@ const VideoForm = ({videos, page}) => {
       dvid.push(
             <Row className='mx-0' key={`video-row-${j}`}>
             {videos.slice(16 * page + 4 * j, 16 * page + 4 * (j+1)).map(video =>
-            <Video key={video.fields.videoid} video={video} setSelectedVideo={setSelectedVideo} selectedVideo={selectedVideo}/>
+            <Video key={video.fields.videoid} video={video} setSelectedVideo={setSelectedVideo} selectedVideo={selectedVideo} setChannel={setChannel}/>
             )}
             </Row>
         )
@@ -20,8 +20,8 @@ const VideoForm = ({videos, page}) => {
     else{
       return (
       <>
-      <Video key={selectedVideo.fields.videoid} video={selectedVideo} setSelectedVideo={setSelectedVideo}/>
-      <button onClick={() => setSelectedVideo(null)}>back</button>
+      <Video key={selectedVideo.fields.videoid} video={selectedVideo} setSelectedVideo={setSelectedVideo} setChannel={setChannel}/>
+      <button class='btn btn-warning' onClick={() => setSelectedVideo(null)}>back</button>
       </>
       )
     }

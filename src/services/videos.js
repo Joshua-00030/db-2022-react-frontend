@@ -16,5 +16,14 @@ const loadPage = async (text) =>
   const response = await axios.post('', newObject)
   return response.data
 }
+const getChannel = async (text) =>{
+  const newObject = new FormData()
+  newObject.append('search_text', text)
+  newObject.append('search_title', 'on')
+  newObject.append('react','on')
+  const st = 'channel/'+text+'r45'
+  const response = await axios.get(st)
+  return response.data
+}
 
-export default { loadPage, getCRSF }
+export default { loadPage, getCRSF , getChannel}

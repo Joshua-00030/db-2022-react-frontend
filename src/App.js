@@ -34,6 +34,8 @@ const App = () => {
 
   const getData = async (event) => {
     event.preventDefault()
+    console.log(event.target[1].checked)
+    console.log(event.target[2].checked)
     if(searchText === ''){
       setErrorMessage('invalid search')
       setTimeout(() => {
@@ -42,7 +44,7 @@ const App = () => {
       return
     }
     setPage(0)
-    const response = await videoService.loadPage(searchText)
+    const response = await videoService.loadPage([searchText,event.target[1].checked, event.target[2].checked])
     setVideos(response)
     setChannel(null)
   }

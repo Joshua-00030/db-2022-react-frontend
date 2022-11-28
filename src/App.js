@@ -56,7 +56,7 @@ const App = () => {
           <Notification message={errorMessage} />]: 
           [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}/>,
           <Notification message={errorMessage} />,
-          <VideoForm videos={videos} page={page} setChannel={handleChannel}/>,
+          <VideoForm key={'videoForm'} videos={videos} page={page} setChannel={handleChannel}/>,
           <Pagination videos={videos} setPage={setPage} page={page}/>]
           }
       </div>

@@ -4,16 +4,16 @@ import Row from 'react-bootstrap/Row';
 
 const Video = ({video, setSelectedVideo, selectedVideo, setChannel}) =>{
   const moreButton = () => (
-    <p>
-    <button class='btn btn-info' onClick={() => setSelectedVideo(video)}>More Info</button>
+    <p key={'b'+video.pk}>
+    <button className='btn btn-info' onClick={() => setSelectedVideo(video)}>More Info</button>
     </p>
     )
 
   return(
-    <Col className="d-flex mb-1" key={video.fields.videoid} href='localhost' target='al'>
+    <Col className="d-flex mb-1" key={`col-${video.pk}`} href='localhost' target='al'>
       <Card className="bg-dark text-white flex-fill">
         <p className='text-center'>
-        <a href={`https://www.youtube.com/watch?v=${video.fields.videoid}`}><b>{video.fields.title}</b></a>
+        <a href={`https://www.youtube.com/watch?v=${video.pk}`}><b>{video.fields.title}</b></a>
         </p>
         <div>
           {false ? 

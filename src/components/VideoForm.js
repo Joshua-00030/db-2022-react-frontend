@@ -10,7 +10,7 @@ const VideoForm = ({videos, page, setChannel}) => {
       dvid.push(
             <Row className='mx-0' key={`video-row-${j}`}>
             {videos.slice(16 * page + 4 * j, 16 * page + 4 * (j+1)).map(video =>
-            <Video key={video.fields.videoid} video={video} setSelectedVideo={setSelectedVideo} selectedVideo={selectedVideo} setChannel={setChannel}/>
+            <Video key={`video-j${video.pk}`} video={video} setSelectedVideo={setSelectedVideo} selectedVideo={selectedVideo} setChannel={setChannel}/>
             )}
             </Row>
         )
@@ -20,8 +20,8 @@ const VideoForm = ({videos, page, setChannel}) => {
     else{
       return (
       <>
-      <Video key={selectedVideo.fields.videoid} video={selectedVideo} setSelectedVideo={setSelectedVideo} setChannel={setChannel}/>
-      <button class='btn btn-warning' onClick={() => setSelectedVideo(null)}>back</button>
+      <Video key={selectedVideo.pk} video={selectedVideo} setSelectedVideo={setSelectedVideo} setChannel={setChannel}/>
+      <button key={'solo back button'} class='btn btn-warning' onClick={() => setSelectedVideo(null)}>back</button>
       </>
       )
     }

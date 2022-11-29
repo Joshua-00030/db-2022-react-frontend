@@ -9,9 +9,11 @@ const getCRSF = async () => {
 
 const loadPage = async (props) => 
 {
+  const d = props[0]+`--search_title=${(props[1] ? 'True' : 'False')}&search_description=${(props[2] ? 'True' : 'False')}--`
   const newObject = new FormData()
-  newObject.append('search_text', props[0])
-  newObject.append('search_title', props[1] ? 'on' : 'off')
+  newObject.append('search_text', d)
+  newObject.append('search_title=', props[1] ? 'True' : 'False')
+  newObject.append('search_description=', props[2] ? 'True' : 'False')
   newObject.append('react','on')
   const response = await axios.post('', newObject)
   return response.data

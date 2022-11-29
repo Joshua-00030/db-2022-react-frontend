@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import SearchForm from './components/serchForm'
+import SearchForm from './components/searchForm'
 import Pagination from './components/Pagination'
 import Notification from './components/notification'
 import VideoForm from './components/VideoForm'
@@ -14,6 +14,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [searchText, setSearchText] = useState('')
   const [page, setPage] = useState(0)
+  const [embed, setEmbed] = useState(true)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -34,8 +35,6 @@ const App = () => {
 
   const getData = async (event) => {
     event.preventDefault()
-    console.log(event.target[1].checked)
-    console.log(event.target[2].checked)
     if(searchText === ''){
       setErrorMessage('invalid search')
       setTimeout(() => {
@@ -56,9 +55,9 @@ const App = () => {
         {channel ? <Channel channel={channel}/>: <></>}
         {videos.length === 0 ? [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}/>,
           <Notification message={errorMessage} />]: 
-          [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData}/>,
+          [<SearchForm searchText={searchText} setSearchText={setSearchText} getData={getData} embed={embed} setEmbed={setEmbed}/>,
           <Notification message={errorMessage} />,
-          <VideoForm key={'videoForm'} videos={videos} page={page} setChannel={handleChannel}/>,
+          <VideoForm key={'videoForm'} videos={videos} page={page} setChannel={handleChannel} embed={embed}/>,
           <Pagination videos={videos} setPage={setPage} page={page}/>]
           }
       </div>

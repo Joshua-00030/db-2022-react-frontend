@@ -1,7 +1,5 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
-import Video from './Video'
-import { useState } from 'react';
 
 const Channel = ({channel}) => {
   if(channel.fields)

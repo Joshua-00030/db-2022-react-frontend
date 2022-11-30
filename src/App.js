@@ -43,7 +43,7 @@ const App = () => {
       return
     }
     setPage(0)
-    const response = await videoService.loadPage([searchText,event.target[1].checked, event.target[2].checked])
+    const response = await videoService.loadPage([searchText,event.target[1].checked, event.target[2].checked, event.target[3].checked, event.target[4].checked, event.target[5].firstChild.data])
     setVideos(response)
     setChannel(null)
   }

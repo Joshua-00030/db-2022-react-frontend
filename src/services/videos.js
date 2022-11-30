@@ -9,11 +9,24 @@ const getCRSF = async () => {
 
 const loadPage = async (props) => 
 {
-  const d = props[0]+`--search_title=${(props[1] ? 'True' : 'False')}&search_description=${(props[2] ? 'True' : 'False')}--`
+  const dic = {
+  'Views Ascending': 'VA',
+  'Views Descending': 'VD',
+  'Likes Ascending': 'LA',
+  'Likes Descending': 'LD',
+  'Dislikes Ascending': 'DA',
+  'Dislikes Descending': 'DD',
+  'Comments Ascending': 'CA',
+  'Comments Descending': 'CD',
+  }
+  const d = props[0]+`--search_title=${(props[1] ? 'True' : 'False')}&search_description=${(props[3] ? 'True' : 'False')}&search_tags=${(props[2] ? 'True' : 'False')}&full_text_search=${(props[4] ? 'True' : 'False')}&sort_by=${dic[props[5]]}--`
   const newObject = new FormData()
   newObject.append('search_text', d)
-  newObject.append('search_title=', props[1] ? 'True' : 'False')
-  newObject.append('search_description=', props[2] ? 'True' : 'False')
+  newObject.append('search_title', props[1] ? 'True' : 'False')
+  newObject.append('search_description', props[3] ? 'True' : 'False')
+  newObject.append('search_tags', props[2] ? 'True' : 'False')
+  newObject.append('full_text_search', props[4] ? 'True' : 'False')
+  newObject.append('sort_by', dic[props[5]])
   newObject.append('react','on')
   const response = await axios.post('', newObject)
   return response.data

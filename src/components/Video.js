@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 
 const Video = ({video, setSelectedVideo, selectedVideo, setChannel}) =>{
   const moreButton = () => (
@@ -33,7 +34,7 @@ const Video = ({video, setSelectedVideo, selectedVideo, setChannel}) =>{
           </Row>
           <Row className='mx-0'>
           <Col>
-            <p onClick={() => setChannel(video.fields.channel)}>{video.fields.channel}</p>
+            <Button onClick={() => setChannel(video.fields.channel)}>{video.fields.channel}</Button>
           </Col>
           <Col>
             <p>{video.fields.published}</p>

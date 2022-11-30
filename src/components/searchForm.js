@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const SearchForm = ({searchText, setSearchText, getData}) => {
-  const [titleCheck, setTitleCheck] = useState(false);
+  const [titleCheck, setTitleCheck] = useState(true);
   const [descriptionCheck, setDescriptionCheck] = useState(false);
 
   const handleDescriptionChange = () => {
